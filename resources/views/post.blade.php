@@ -11,7 +11,9 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     </head>
     <body class="antialiased">
-        <h2><?= $post ?></h2>
+        <h2><?= $post->title ?></h2>
+        <p><?= $post->date ?></p>
+        <p><?= $post->body ?></p>
         <a href="/posts">go back</a>
     </body>
 </html>
