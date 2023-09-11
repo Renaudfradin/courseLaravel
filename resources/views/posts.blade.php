@@ -12,8 +12,8 @@
     </head>
     <body class="antialiased">
         <a href="/">home</a>
-        <h2><a href="/post">post 1</a></h2>
-        <h2><a href="/post">post 2</a></h2>
-        <h2><a href="/post">post 3</a></h2>
+        <h2><a href="/post/firts">post 1</a></h2>
+        <h2><a href="/post/second">post 2</a></h2>
+        <h2><a href="/post/third">post 3</a></h2>
     </body>
 </html>

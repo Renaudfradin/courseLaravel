@@ -21,8 +21,18 @@ Route::get('/posts', function (){
     return view('posts');
 });
 
-Route::get('/post', function (){
+Route::get('/post/{post}', function ($slug){
+    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    $post = cache()->rememner("post.{$slug}", 10, function () use($path){
+        return file_get_contents($path);
+    });
+
     return view('post',[
-        'post' => "posts 1 x°)°°°°°))))"
+        'post' => $post
     ]);
-});
+})->where('post', '[A-z_\-]+');
