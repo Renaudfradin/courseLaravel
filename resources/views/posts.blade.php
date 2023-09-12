@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+{{-- @extends('layout')
 
-        <title>Laravel</title>
+@section('banner')
+    <h2>All posts</h2>
+@endsection
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    </head>
-    <body class="antialiased">
+@section('content')
+    <div>
         <a href="/">home</a>
         <div>
-            <?php foreach ($posts as $post) : ?>
-                <a href="/post/<?= $post->slug ?>"><h2><?= $post->title ?></h2></a>
-                <p><?= $post->excerpt ?></p>
-            <?php endforeach ?>
+            @foreach ($posts as $post)
+                <article>
+                    <a href="/post/{{ $post->slug }}">
+                        <h2>{{ $post->title }}</h2>
+                    </a>
+                    <p>{{ $post->excerpt }}</p>
+                </article>
+            @endforeach
         </div>
-        {{-- <h2><a href="/post/firts">post 1</a></h2>
-        <h2><a href="/post/second">post 2</a></h2>
-        <h2><a href="/post/third">post 3</a></h2> --}}
-    </body>
-</html>
+    </div>
+@endsection --}}
+
+<x-layout>
+    <div>
+        <a href="/">home</a>
+        <div>
+            @foreach ($posts as $post)
+                <article>
+                    <a href="/post/{{ $post->slug }}">
+                        <h2>{{ $post->title }}</h2>
+                    </a>
+                    <p>{{ $post->excerpt }}</p>
+                </article>
+            @endforeach
+        </div>
+    </div>
+</x-layout>

@@ -32,9 +32,21 @@ class Post
 
         // return cache()->remember("post.{$slug}", 10, fn () => file_get_contents($path));
 
-        $posts = static::all();
+        $posts = static::all()->firstWhere('slug', $slug);
 
-        return $posts->firstWhere('slug', $slug);
+        return $posts;
+    }
+
+    public static function findOrFail($slug)
+    {
+
+        $posts = static::find($slug);
+
+        if (!$posts) {
+            throw new ModelNotFoundException();
+        }
+        
+        return $posts;
     }
 
     public static function all()
