@@ -2,11 +2,8 @@
 
 use App\Models\Categorie;
 use Illuminate\Support\Facades\Route;
-use App\Models\Tests;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Support\Facades\File;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,17 +21,14 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', function (){
-    
     $posts = Post::latest('created_at')->get();
-
     return view('posts',[
-        'posts' => $posts
+        'posts' => $posts,
+        'categories' => Categorie::all()
     ]);
 });
 
 Route::get('/post/{post}', function (Post $post){
-    //$post = Post::findOrFail(Post $post);
-
     return view('post',[
         'post' => $post
     ]);
@@ -43,13 +37,15 @@ Route::get('/post/{post}', function (Post $post){
 
 Route::get('/categorie/{categorie}', function (Categorie $categorie){
     return view('posts',[
-        'posts' => $categorie->posts
+        'posts' => $categorie->posts,
+        'categories' => Categorie::all()
     ]);
 });
 
 
 Route::get('/authors/{user}', function (User $user){
     return view('posts',[
-        'posts' => $user->posts
+        'posts' => $user->posts,
+        'categories' => Categorie::all()
     ]);
 });
