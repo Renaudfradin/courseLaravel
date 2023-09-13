@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Tests;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -29,8 +30,8 @@ Route::get('/posts', function (){
     ]);
 });
 
-Route::get('/post/{post}', function ($slug){
-    $post = Post::findOrFail($slug);
+Route::get('/post/{post}', function (Post $post){
+    //$post = Post::findOrFail(Post $post);
 
     return view('post',[
         'post' => $post

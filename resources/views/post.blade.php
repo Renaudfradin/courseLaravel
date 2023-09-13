@@ -12,8 +12,8 @@
 <x-layout>
     <div>
         <h2>{{ $post->title }}</h2>
-        <p>{{ $post->date }}</p>
-        <p>{!! $post->body !!}</p>
+        <p>{{ $post->created_at }}</p>
+        <p>{{ $post->body }}</p>
         <a href="/posts">go back</a>
     </div>
 </x-layout>
