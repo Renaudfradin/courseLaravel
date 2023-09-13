@@ -10,4 +10,9 @@ class Categorie extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'slug', 'id'];
+    protected $guarded = ['id'];
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id()->autoIncrement();
+            $table->foreignId('user_id');
             $table->foreignId('categorie_id');
             $table->string('title');
             $table->text('excerpt');

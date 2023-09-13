@@ -13,7 +13,13 @@ class Post extends Model
     protected $guarded = ['id'];
     //protected $fillable = ['title', 'excerpt', 'body', 'id'];
 
+    protected $with = ['categorie','user'];
+
     public function categorie(): BelongsTo{
         return $this->belongsTo(Categorie::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

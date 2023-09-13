@@ -29,7 +29,7 @@
                     <a href="/post/{{ $post->id }}">
                         <h2>{{ $post->title }}</h2>
                     </a>
-                    <p>{{ $post->categorie->name }}</p>
+                    by <a href="/authors/{{ $post->user->id }}"><p>{{ $post->user->name }}</p></a> in <a href="/categorie/{{ $post->categorie->id }}"><p>{{ $post->categorie->name }}</p></a>
                     <p>{{ $post->excerpt }}</p>
                 </article>
             @endforeach
