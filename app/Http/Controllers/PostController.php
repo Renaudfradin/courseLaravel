@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -19,6 +20,20 @@ class PostController extends Controller
     public function show(Post $post){
         return view('post',[
             'post' => $post
+        ]);
+    }
+
+    public function getPostToCategorie(Categorie $categorie){
+        return view('posts',[
+            'posts' => $categorie->posts,
+            'categories' => Categorie::all()
+        ]);
+    }
+
+    public function getPostToAuthor(User $user){
+        return view('posts',[
+            'posts' => $user->posts,
+            'categories' => Categorie::all()
         ]);
     }
 

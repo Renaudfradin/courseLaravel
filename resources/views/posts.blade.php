@@ -22,7 +22,7 @@
 
 <x-layout>
     <div>
-        <a href="/">home</a>
+        <a href="/posts">home</a>
         @auth
             <span>welcome back {{ auth()->user()->name }}</span>
             <form action="/logout" method="post">

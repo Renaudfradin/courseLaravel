@@ -24,24 +24,9 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', [PostController::class, 'index']);
-
 Route::get('/post/{post}', [PostController::class, 'show']);
-
-
-Route::get('/categorie/{categorie}', function (Categorie $categorie){
-    return view('posts',[
-        'posts' => $categorie->posts,
-        'categories' => Categorie::all()
-    ]);
-});
-
-
-Route::get('/authors/{user}', function (User $user){
-    return view('posts',[
-        'posts' => $user->posts,
-        'categories' => Categorie::all()
-    ]);
-});
+Route::get('/categorie/{categorie}', [PostController::class, 'getPostToCategorie']);
+Route::get('/authors/{user}', [PostController::class, 'getPostToAuthor']);
 
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
