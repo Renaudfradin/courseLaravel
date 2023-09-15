@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
-use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -39,5 +39,24 @@ class PostController extends Controller
 
     public function getPosts(){
         return Post::latest()->filter(request(['search']));
+    }
+
+    public function create(){
+        return view('post.create');
+    }
+
+    public function store(){
+        $atributes = request()->validate([
+            'title' => 'required|max:255',
+            'excerpt' => 'required|max:255',
+            'body' => 'required',
+            'categorie_id' => ['required', Rule::exists('categories', 'id')]
+        ]);
+
+        $atributes['user_id'] = auth()->id();
+
+        Post::create($atributes);
+
+        return redirect('/posts');
     }
 }

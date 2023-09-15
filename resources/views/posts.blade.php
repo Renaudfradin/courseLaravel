@@ -29,6 +29,7 @@
                 @csrf
                 <button type="submit">log out</button>
             </form>
+            <a href="admin/posts/create">admin</a>
         @else
             <a href="/register">register</a>
             <a href="/login">log in</a>
