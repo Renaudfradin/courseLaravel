@@ -23,17 +23,26 @@
 <x-layout>
     <div>
         <a href="/">home</a>
-        {{-- <select class="flex-1 appearance-none bg-transparent py-2 pl-3 pr-9 text-sm font-semibold">
-            <option value="category" disabled selected>Category
-            </option> --}}
+        @auth
+            <span>welcome back {{ auth()->user()->name }}</span>
+            <form action="/logout" method="post">
+                @csrf
+                <button type="submit">log out</button>
+            </form>
+        @else
+            <a href="/register">register</a>
+            <a href="/login">log in</a>
+        @endauth
+
+            <div>
+                <form method="get">
+                    <input type="text" name="search" class="border-2 border-solid border-black-500">
+                </form>
+            </div>
             <x-dropdow-item href="/posts">All</x-dropdow-item>
             @foreach ($categories as $categorie)
-                {{-- <a 
-                    href="/categorie/{{ $categorie->id }}"
-                >{{ $categorie->name }} --}}
                 <x-dropdow-item href="/categorie/{{ $categorie->id }}">{{ $categorie->name }}</x-dropdow-item>
             @endforeach
-        {{-- </select> --}}
         <div>
             @foreach ($posts as $post)
                 <article>
@@ -46,5 +55,7 @@
                 </article>
             @endforeach
         </div>
+        {{-- {{ $posts->links() }} --}}
+
     </div>
 </x-layout>
