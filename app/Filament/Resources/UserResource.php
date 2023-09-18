@@ -18,12 +18,20 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?string $navigationLabel = 'Users';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationGroup = 'Blog';
 
     public static function form(Form $form): Form
     {
@@ -31,20 +39,21 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->minLength(3),
                 TextInput::make('email')
                     ->required()
                     ->maxLength(255)
+                    ->minLength(3)
                     ->email(),
                 TextInput::make('username')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->minLength(3),
                 TextInput::make('password')
                     ->required()
                     ->maxLength(255)
+                    ->minLength(5)
                     ->password(),
-                DatePicker::make('created_at')
-                    ->required()
-                    ->maxDate(now()),
             ]);
     }
 
@@ -59,8 +68,8 @@ class UserResource extends Resource
                 TextColumn::make('username')
                     ->searchable(),
                 IconColumn::make('email_verified_at')
-                    ->boolean(),
-                TextColumn::make('created_at'),
+                    ->boolean()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -70,8 +79,8 @@ class UserResource extends Resource
                 DeleteAction::make()
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
