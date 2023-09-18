@@ -6,9 +6,13 @@ use App\Filament\Resources\OwnerResource\Pages;
 use App\Filament\Resources\OwnerResource\RelationManagers;
 use App\Models\Owner;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,7 +27,18 @@ class OwnerResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('email')
+                    ->required()
+                    ->email()
+                    ->maxLength(255)
+                    ->label('adresse email'),
+                TextInput::make('phone')
+                    ->label('phone number')
+                    ->tel()
+                    ->required(),
             ]);
     }
 
@@ -31,16 +46,17 @@ class OwnerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('phone'),
-                Tables\Columns\TextColumn::make('created_at'),
+                TextColumn::make('name'),
+                TextColumn::make('email')
+                    ->searchable() ,
+                TextColumn::make('phone'),
+                TextColumn::make('created_at'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

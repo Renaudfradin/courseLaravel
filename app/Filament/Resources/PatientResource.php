@@ -4,11 +4,20 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
+use App\Filament\Resources\PatientResource\RelationManagers\TreatmentsRelationManager;
 use App\Models\Patient;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,39 +32,38 @@ class PatientResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('type')
+                Select::make('type')
                     ->options([
                         'cat' => 'Cat',
                         'dog' => 'Dog',
                         'rabbit' => 'Rabbit',
                     ])
                     ->required(),
-                Forms\Components\DatePicker::make('date_of_birth')
+                DatePicker::make('date_of_birth')
                     ->required()
                     ->maxDate(now()),
-                Forms\Components\Select::make('owner_id')
+                Select::make('owner_id')
                     ->relationship('owner', 'name')
                     ->searchable()
                     ->preload()
                     ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->label('Email address')
                             ->email()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
+                        TextInput::make('phone')
                             ->label('Phone number')
                             ->tel()
                             ->required(),
                     ])
                     ->required(),
-
             ]);
     }
 
@@ -63,22 +71,27 @@ class PatientResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('date_of_birth'),
-                Tables\Columns\TextColumn::make('owner.name')
+                TextColumn::make('type'),
+                TextColumn::make('date_of_birth'),
+                TextColumn::make('owner.name')
                     ->searchable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('type')
+                    ->options([
+                        'cat' => 'Cat',
+                        'dog' => 'Dog',
+                        'rabbit' => 'Rabbit',
+                    ])
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -86,7 +99,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TreatmentsRelationManager::class,
         ];
     }
     

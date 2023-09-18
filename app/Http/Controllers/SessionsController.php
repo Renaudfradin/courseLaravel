@@ -31,7 +31,7 @@ class SessionsController extends Controller
         
         session()->regenerate();
 
-        return redirect('/posts')->with('success', 'connect');
+        return redirect('/admin')->with('success', 'connect');
 
     }
 }
